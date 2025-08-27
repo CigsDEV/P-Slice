@@ -4,13 +4,23 @@ import openfl.filters.BitmapFilter;
 
 class FunkinCamera extends FlxCamera {
     var camName:String;
+    
+    public var X:Int;
+    public var Y:Int;
+
     public var filters(never,set):Array<BitmapFilter>;
+    
     public function set_filters(value:Array<BitmapFilter>) {
         this.setFilters(value);
         return value;
     }
+
     public function new(name:String,X:Int = 0, Y:Int = 0, Width:Int = 0, Height:Int = 0, Zoom:Float = 0) {
         camName = name;
+
+        this.X = X;
+        this.Y = Y;
+
         super(X,Y,Width,Height,Zoom);
     }
 
@@ -120,15 +130,15 @@ class FunkinCamera extends FlxCamera {
         }
         
         function bindScrollPos(scrollPos:FlxPoint)
-            {
-                var minX:Null<Float> = minScrollX == null ? null : minScrollX - (zoom - 1) * width / (2 * zoom);
-                var maxX:Null<Float> = maxScrollX == null ? null : maxScrollX + (zoom - 1) * width / (2 * zoom);
-                var minY:Null<Float> = minScrollY == null ? null : minScrollY - (zoom - 1) * height / (2 * zoom);
-                var maxY:Null<Float> = maxScrollY == null ? null : maxScrollY + (zoom - 1) * height / (2 * zoom);
-        
-                // keep point with bounds
-                scrollPos.x = FlxMath.bound(scrollPos.x, minX, (maxX != null) ? maxX - width : null);
-                scrollPos.y = FlxMath.bound(scrollPos.y, minY, (maxY != null) ? maxY - height : null);
-                return scrollPos;
-            }
+        {
+            var minX:Null<Float> = minScrollX == null ? null : minScrollX - (zoom - 1) * width / (2 * zoom);
+            var maxX:Null<Float> = maxScrollX == null ? null : maxScrollX + (zoom - 1) * width / (2 * zoom);
+            var minY:Null<Float> = minScrollY == null ? null : minScrollY - (zoom - 1) * height / (2 * zoom);
+            var maxY:Null<Float> = maxScrollY == null ? null : maxScrollY + (zoom - 1) * height / (2 * zoom);
+    
+            // keep point with bounds
+            scrollPos.x = FlxMath.bound(scrollPos.x, minX, (maxX != null) ? maxX - width : null);
+            scrollPos.y = FlxMath.bound(scrollPos.y, minY, (maxY != null) ? maxY - height : null);
+            return scrollPos;
+        }
 }
